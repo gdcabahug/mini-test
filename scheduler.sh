@@ -1,6 +1,7 @@
 #!/bin/bash
 
 file='storage_data/data.json'
+
 # create json file if it does not exist
 if [[ ! -e "$file" ]]; then
 	mkdir -p storage_data
