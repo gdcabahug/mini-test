@@ -6,7 +6,6 @@ pipeline {
             steps {
                 sh "echo Hello"
                 sh "pwd"
-                sh "hostaname"
             }
         }
     }
