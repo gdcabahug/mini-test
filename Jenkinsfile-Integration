@@ -7,7 +7,8 @@ pipeline {
     }
 
     stages {
-        stage('Build') {
+        // Build Stage
+        stage('Build Application') {
             // Only run this stage if Dockerfile or scheduler.sh has changed
             when {
                 anyOf {
@@ -23,6 +24,21 @@ pipeline {
                         customImage.push()
                     }
                 }
+            }
+        }
+
+        // Deploy Stage
+        stage('Deploy Application') {
+            // Only run this stage if Dockerfile or scheduler.sh has changed
+            when {
+                anyOf {
+                    changeset 'Dockerfile'
+                    changeset 'scheduler.sh'
+                }
+            }
+            steps {
+                sh "kubectl delete deploy scheduler-deployment || true"
+                sh "kubectl apply -f k8s/deployment.yaml"
             }
         }
     }
