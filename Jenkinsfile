@@ -39,7 +39,7 @@ pipeline {
             }
             steps {
                 sh "kubectl delete deploy scheduler-deployment || true"
-                sh "kubectl apply -f k8s/deploy-test.yml"
+                sh "kubectl apply -f test-manifests/deploy-test.yml"
             }
         }
     }
