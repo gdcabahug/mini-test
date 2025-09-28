@@ -1,11 +1,18 @@
 pipeline {
     agent any
 
+    environment {
+        IMAGE = "gdcabahug/scheduler-app"
+    }
+
     stages {
         stage('Build') {
             steps {
-                def customImage = docker.build("giannidylancbhg/scheduler-app:{env.BUILD_ID}")
-                customImage.push()
+                script {
+                    // Build and push Docker image
+                    def customImage = docker.build("${IMAGE}:${env.BUILD_ID}")
+                    customImage.push()
+                }
             }
         }
     }
