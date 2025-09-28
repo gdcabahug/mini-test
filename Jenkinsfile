@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         IMAGE = "gdcabahug/scheduler-app"
+        REGISTRY = "https://index.docker.io/v1/"
     }
 
     stages {
@@ -11,7 +12,9 @@ pipeline {
                 script {
                     // Build and push Docker image
                     def customImage = docker.build("${IMAGE}:${env.BUILD_ID}")
-                    customImage.push()
+                    docker.withRegistry("${REGISTRY}", "docker-hub-creds") {
+                        customImage.push()
+                    }
                 }
             }
         }
