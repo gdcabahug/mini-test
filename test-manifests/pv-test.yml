@@ -11,7 +11,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /home/gcabahug/persist_data/
+    path: /mnt/persist_dir/
   nodeAffinity:
     required:
       nodeSelectorTerms:
