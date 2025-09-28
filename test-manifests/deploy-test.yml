@@ -19,3 +19,17 @@ spec:
         image: giannidylancbhg/scheduler-2
         ports:
         - containerPort: 7681
+        volumeMounts:
+        - name: scheduler-volume
+          mountPath: /opt/app/storage_data/
+      volumes:
+      - name: scheduler-volume
+        persistentVolumeClaim:
+          claimName: scheduler-pvc
+      nodeSelector:
+        kubernetes.io/hostname: controlplane
+
+#      - name: scheduler-volume
+#        hostPath:
+#          path: /home/gcabahug/persist_data/
+#          type: Directory
