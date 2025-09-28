@@ -8,6 +8,7 @@ pipeline {
 
     stages {
         // Build Stage
+        /*
         stage('Build Application') {
             // Only run this stage if Dockerfile or scheduler.sh has changed
             when {
@@ -27,16 +28,18 @@ pipeline {
                 }
             }
         }
+        */
 
         // Deploy Stage
         stage('Deploy Application') {
             // Only run this stage if Dockerfile or scheduler.sh has changed
-            when {
-                anyOf {
-                    changeset 'Dockerfile'
-                    changeset 'scheduler.sh'
-                }
-            }
+            // when {
+            //     anyOf {
+            //         changeset 'Dockerfile'
+            //         changeset 'scheduler.sh'
+            //     }
+            // }
+
             steps {
                 withKubeConfig([credentialsId: 'kube-cred']) {
                     sh "kubectl delete deploy scheduler-deployment || true"
