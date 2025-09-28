@@ -4,8 +4,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh "echo Hello"
-                sh "pwd"
+                def customImage = docker.build("giannidylancbhg/scheduler-app:{env.BUILD_ID}")
+                customImage.push()
             }
         }
     }
