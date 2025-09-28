@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     // Build and push Docker image
-                    def customImage = docker.build("${IMAGE}:${env.BUILD_ID}")
+                    def customImage = docker.build("${IMAGE}:${env.BUILD_ID}-${env.GIT_COMMIT.take(7)}")
                     docker.withRegistry("${REGISTRY}", "docker-hub-cred") {
                         customImage.push()
                     }
