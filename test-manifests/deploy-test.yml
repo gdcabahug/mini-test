@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: scheduler-container
-        image: giannidylancbhg/scheduler-2
+        image: gdcabahug/scheduler-app
         ports:
         - containerPort: 7681
         volumeMounts:
