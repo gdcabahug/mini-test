@@ -12,7 +12,7 @@ pipeline {
                 script {
                     // Build and push Docker image
                     def customImage = docker.build("${IMAGE}:${env.BUILD_ID}")
-                    docker.withRegistry("${REGISTRY}", "docker-hub-creds") {
+                    docker.withRegistry("${REGISTRY}", "docker-hub-cred") {
                         customImage.push()
                     }
                 }
