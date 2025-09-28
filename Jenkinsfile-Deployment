@@ -1,0 +1,11 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Deploy Application') {
+            steps {
+                echo 'Deployment stage - to be implemented'
+            }
+        }
+    }
+}
