@@ -38,8 +38,10 @@ pipeline {
                 }
             }
             steps {
-                sh "kubectl delete deploy scheduler-deployment || true"
-                sh "kubectl apply -f test-manifests/deploy-test.yml"
+                withKubeConfig([credentialsId: 'kube-cred']) {
+                    sh "kubectl delete deploy scheduler-deployment || true"
+                    sh "kubectl apply -f test-manifests/deploy-test.yml"
+                }
             }
         }
     }
