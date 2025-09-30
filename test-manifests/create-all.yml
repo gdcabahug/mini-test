@@ -29,7 +29,7 @@ spec:
       nodeSelector:
         node: controlplane
 
------
+---
 
 apiVersion: v1
 kind: Service
@@ -44,7 +44,7 @@ spec:
       targetPort: 7681
       nodePort: 30007
 
------
+---
 
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
@@ -53,7 +53,7 @@ metadata:
 provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: WaitForFirstConsumer
 
------
+---
 
 apiVersion: v1
 kind: PersistentVolume
@@ -78,7 +78,7 @@ spec:
           values:
           - controlplane
 
------
+---
 
 apiVersion: v1
 kind: PersistentVolumeClaim
