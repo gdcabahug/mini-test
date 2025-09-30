@@ -1,0 +1,105 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scheduler-deployment
+  labels:
+    app: scheduler-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: scheduler
+  template:
+    metadata:
+      labels:
+        app: scheduler
+    spec:
+      containers:
+      - name: scheduler-container
+        image: gdcabahug/scheduler-app
+        ports:
+        - containerPort: 7681
+        volumeMounts:
+        - name: scheduler-volume
+          mountPath: /opt/app/storage_data/
+      volumes:
+      - name: scheduler-volume
+        persistentVolumeClaim:
+          claimName: scheduler-pvc
+      nodeSelector:
+        node: controlplane
+
+-----
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  type: NodePort
+  selector:
+    app: scheduler
+  ports:
+    - port: 7681
+      targetPort: 7681
+      nodePort: 30007
+
+-----
+
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: local-storage
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+
+-----
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: scheduler-pv
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  local:
+    path: /mnt/persist_dir/
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: node
+          operator: In
+          values:
+          - controlplane
+
+-----
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: scheduler-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: local-storageapiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: scheduler-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: local-storage
