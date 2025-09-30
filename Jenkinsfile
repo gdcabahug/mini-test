@@ -20,7 +20,8 @@ pipeline {
                 script {
                     // Build and push Docker image
                     // def customImage = docker.build("${IMAGE}:${env.BUILD_ID}-${env.GIT_COMMIT.take(7)}")
-                    def customImage = docker.build("${IMAGE}:${env.GIT_COMMIT.take(7)}")
+                    // def customImage = docker.build("${IMAGE}:${env.GIT_COMMIT.take(7)}")
+                    sh "docker build --network=host -t gdcabahug/scheduler-app:${GIT_COMMIT.take(7)} ."
                     docker.withRegistry("${REGISTRY}", 'docker-hub-cred') {
                         customImage.push()
                         customImage.push("latest")
