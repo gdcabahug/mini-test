@@ -9,3 +9,6 @@ RUN wget https://github.com/tsl0922/ttyd/releases/download/1.7.7/ttyd.x86_64 && 
 
 ENTRYPOINT ["./ttyd.x86_64", "-p", "7681", "-W", "./scheduler.sh"]
 
+
+
+
