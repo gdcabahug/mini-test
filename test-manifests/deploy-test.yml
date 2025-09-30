@@ -26,10 +26,5 @@ spec:
       - name: scheduler-volume
         persistentVolumeClaim:
           claimName: scheduler-pvc
-      nodeSelector:
-        kubernetes.io/hostname: controlplane
-
-#      - name: scheduler-volume
-#        hostPath:
-#          path: /home/gcabahug/persist_data/
-#          type: Directory
+      # nodeSelector:
+        # kubernetes.io/hostname: controlplane
