@@ -25,10 +25,10 @@ spec:
     required:
       nodeSelectorTerms:
       - matchExpressions:
-        - key: node
+        - key: beta.kubernetes.io/os
           operator: In
           values:
-          - controlplane
+          - linux
 
 ---
 
