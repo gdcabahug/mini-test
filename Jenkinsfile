@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         IMAGE = 'gdcabahug/scheduler-app'
-        REGISTRY = 'https://registry.hub.docker.com'
     }
 
     stages {
@@ -22,7 +21,7 @@ pipeline {
                     // def customImage = docker.build("${IMAGE}:${env.GIT_COMMIT.take(7)}")
                     sh "docker build --network=host -t gdcabahug/scheduler-app:${GIT_COMMIT.take(7)} ."
        
-                    docker.withRegistry("${REGISTRY}", 'docker-hub-cred') {
+                    docker.withRegistry('', 'docker-hub-cred') {
                         // customImage.push()
                         // customImage.push("latest")
                         sh "docker push gdcabahug/scheduler-app:${GIT_COMMIT.take(7)}"
