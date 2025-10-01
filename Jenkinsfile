@@ -45,7 +45,7 @@ pipeline {
 
             steps {
                 withKubeConfig([credentialsId: 'kube-cred']) {
-                    sh "kubectl apply -f k8s/deploy-canary.yml"
+                    sh "kubectl apply -f k8s/deploy-canary.yml -n opswerks"
                 }
             }
         }
