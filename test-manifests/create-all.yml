@@ -6,7 +6,6 @@ provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: WaitForFirstConsumer
 
 ---
-
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -16,7 +15,7 @@ spec:
     storage: 1Gi
   volumeMode: Filesystem
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
@@ -24,14 +23,13 @@ spec:
   nodeAffinity:
     required:
       nodeSelectorTerms:
-      - matchExpressions:
-        - key: beta.kubernetes.io/os
-          operator: In
-          values:
-          - linux
+        - matchExpressions:
+            - key: beta.kubernetes.io/os
+              operator: In
+              values:
+                - linux
 
 ---
-
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -46,13 +44,12 @@ spec:
   storageClassName: local-storage
 
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: scheduler-deployment
+  name: scheduler-stable-deployment
   labels:
-    app: scheduler-deployment
+    app: scheduler-stable-deployment
 spec:
   replicas: 3
   selector:
@@ -64,20 +61,19 @@ spec:
         app: scheduler
     spec:
       containers:
-      - name: scheduler-container
-        image: gdcabahug/scheduler-app
-        ports:
-        - containerPort: 7681
-        volumeMounts:
-        - name: scheduler-volume
-          mountPath: /opt/app/storage_data/
+        - name: scheduler-stable-container
+          image: gdcabahug/scheduler-app
+          ports:
+            - containerPort: 7681
+          volumeMounts:
+            - name: scheduler-volume
+              mountPath: /opt/app/storage_data/
       volumes:
-      - name: scheduler-volume
-        persistentVolumeClaim:
-          claimName: scheduler-pvc
+        - name: scheduler-volume
+          persistentVolumeClaim:
+            claimName: scheduler-pvc
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -90,4 +86,3 @@ spec:
     - port: 7681
       targetPort: 7681
       nodePort: 30007
-

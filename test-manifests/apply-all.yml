@@ -47,9 +47,9 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: scheduler-deployment
+  name: scheduler-stable-deployment
   labels:
-    app: scheduler-deployment
+    app: scheduler-stable-deployment
 spec:
   replicas: 3
   selector:
@@ -61,7 +61,7 @@ spec:
         app: scheduler
     spec:
       containers:
-        - name: scheduler-container
+        - name: scheduler-stable-container
           image: gdcabahug/scheduler-app
           ports:
             - containerPort: 7681
