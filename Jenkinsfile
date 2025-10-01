@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE = 'gdcabahug/scheduler-app'
-        REGISTRY = 'https://index.docker.io/v1/'
+        REGISTRY = 'https://registry.hub.docker.com'
     }
 
     stages {
@@ -46,8 +46,7 @@ pipeline {
 
             steps {
                 withKubeConfig([credentialsId: 'kube-cred']) {
-                    sh "kubectl delete deploy scheduler-deployment || true"
-                    sh "kubectl apply -f test-manifests/deploy-test.yml"
+                    sh "kubectl apply -f k8s/deploy-canary.yml"
                 }
             }
         }
