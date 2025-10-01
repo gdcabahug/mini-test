@@ -24,7 +24,7 @@ function print_schedule() {
 
 while true
 do
-    echo "hello"
+    echo "hello this is cannary"
 	# input name
 	read -p "Enter Employee Name: " emp_name
 	
