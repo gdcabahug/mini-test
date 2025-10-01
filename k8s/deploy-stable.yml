@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: scheduler-stable-deployment
+  namespace: opswerks
   labels:
     app: scheduler-stable-deployment
 spec:
